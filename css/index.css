@@ -113,9 +113,10 @@
  }
 
 
- .about{
-    font-weight: bold;
+ .about {
+     font-weight: bold;
  }
+
  /* FIN HEADER */
 
 
@@ -161,17 +162,18 @@
      cursor: pointer;
  }
 
- .nav__ul{
-    font-weight: 400;
+ .nav__ul {
+     font-weight: 400;
  }
 
- .copy{
-    display: flex;
-    flex-flow: column nowrap;
-    gap: .4rem;
-    font-size: .8em;
-    color: rgb(160, 159, 159);
+ .copy {
+     display: flex;
+     flex-flow: column nowrap;
+     gap: .4rem;
+     font-size: .8em;
+     color: rgb(160, 159, 159);
  }
+
  .nav__ul:hover {
      color: grey;
  }
@@ -180,7 +182,6 @@
  .wrapper__projects {
      width: 100%;
      min-height: 90vh;
-     background-color: turquoise;
      margin-top: 5rem;
 
      display: flex;
@@ -189,16 +190,83 @@
  }
 
 
- .wrap__grid{
-    width: 70%;
-    background-color: rgb(185, 255, 185);
+ .wrap__grid {
+     width: 70%;
  }
 
-.grid__imgs{
-    width: 100%;
-}
+ .grid__imgs {
+     width: 100%;
+ }
+
+/* CARROUSEL */
 
 
+
+ .carousel {
+     width: 60%;
+     position: relative;
+     overflow: hidden;
+     margin: 0 auto;
+ }
+
+ .slides {
+     display: flex;
+     transition: transform 0.35s ease;
+     will-change: transform;
+     touch-action: pan-y;
+ }
+
+ .slide {
+     flex: 0 0 100%;
+     box-sizing: border-box;
+     text-align: center;
+ }
+
+
+
+
+
+ /* Zonas de clic invisibles */
+ .tap-zone {
+     position: absolute;
+     top: 0;
+     height: 100%;
+     width: 50%;
+     z-index: 2;
+ }
+
+ .left-zone {
+     left: 0;
+ }
+
+ .right-zone {
+     right: 0;
+ }
+
+ /* Controles */
+ .carousel-controls {
+     display: flex;
+     flex-flow: row nowrap;
+     justify-content: flex-start;
+     align-items: center;
+
+ }
+
+ .carousel .btn {
+     color: rgb(0, 0, 0);
+     padding: 6px 10px;
+     cursor: pointer;
+ }
+
+ /* indicador tipo 1/3 */
+ .page-indicator {
+     font-size: .9375rem;
+ }
+
+ .btn {
+     cursor: pointer;
+     z-index: 3;
+ }
 
 
 
@@ -214,11 +282,25 @@
 
      .wrapper__principal {
          margin-top: 5rem;
+       
 
      }
 
      .div__p {
-         width: 70%;
+         width: 75%;
+         /* background-color: rgb(233, 251, 251); */
+         /* justify-content: flex-start; */
      }
 
+       .carousel {
+         width: 100%;
+     }
+
+     .text__h2 {
+         margin-top: 1rem;
+     }
+
+    .wrap__grid{
+        width: 90%;
+    }
  }

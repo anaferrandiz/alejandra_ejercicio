@@ -1,128 +1,79 @@
 'use strict';
 
-// ************* MENÚ RESPONSIVE *************
+document.addEventListener('DOMContentLoaded', function () {
 
-const headerBtn = document.querySelector('.header__button')
-const headerNav = document.querySelector('.header__nav')
+  // ************* MENÚ *************
+  const headerBtn = document.querySelector('.header__button')
+  const headerNav = document.querySelector('.header__nav')
 
-// Inicializamos el estado aria-expanded
-headerBtn.setAttribute('aria-expanded', 'false')
+  if (headerBtn && headerNav) {
+    headerBtn.setAttribute('aria-expanded', 'false')
+    headerBtn.addEventListener('click', function () {
+      const isActive = headerNav.classList.toggle('isActive')
+      headerBtn.setAttribute('aria-expanded', isActive)
+    })
+  }
 
-headerBtn.addEventListener('click', function () {
-  const isActive = headerNav.classList.toggle('isActive')
-  // Cambiamos el aria-expanded según el estado
-  headerBtn.setAttribute('aria-expanded', isActive)
-})
-
-// ************* FIN MENÚ RESPONSIVE *************
-
-
-// CARRUSEL
-
-'use strict';
-
-(function () {
-  document.querySelectorAll('.carousel').forEach(initCarousel);
+  // ************* CARRUSEL *************
+  document.querySelectorAll('.carousel').forEach(initCarousel)
 
   function initCarousel(carousel) {
-
-    const slidesEl = carousel.querySelector('.slides');
-    const slideEls = Array.from(carousel.querySelectorAll('.slide'));
-    const count = slideEls.length;
-    let current = 0;
-
-    const btnPrev = carousel.querySelector('.btn.prev');
-    const btnNext = carousel.querySelector('.btn.next');
-    const pageIndicator = carousel.querySelector('.page-indicator');
-
-    const leftZone = carousel.querySelector('.left-zone');
-    const rightZone = carousel.querySelector('.right-zone');
-
-    // ---------- Navegación ----------
-    function updatePageIndicator() {
-      pageIndicator.textContent = `${current + 1} / ${count}`;
-    }
+    const slidesEl = carousel.querySelector('.slides')
+    const slideEls = Array.from(carousel.querySelectorAll('.slide'))
+    const count = slideEls.length
+    let current = 0
+    let width = carousel.clientWidth
 
     function updateTransform(animate = true, extraPercent = 0) {
-      const base = -current * 100;
-      const totalPercent = base + extraPercent;
-      slidesEl.style.transition = animate ? 'transform 0.35s ease' : 'none';
-      slidesEl.style.transform = `translateX(${totalPercent}%)`;
+      const totalPercent = (-current * 100) + extraPercent
+      slidesEl.style.transition = animate ? 'transform 0.35s ease' : 'none'
+      slidesEl.style.transform = `translateX(${totalPercent}%)`
     }
 
     function goTo(index) {
-      current = Math.max(0, Math.min(count - 1, index));
-      updateTransform(true, 0);
-      updatePageIndicator();
+      current = (index + count) % count
+      updateTransform(true)
     }
 
-    btnNext.addEventListener('click', () => {
-      goTo((current + 1) % count);
-    });
+    let pointerDown = false
+    let startX = 0
+    let deltaX = 0
 
-    btnPrev.addEventListener('click', () => {
-      goTo((current - 1 + count) % count);
-    });
+    carousel.addEventListener('pointerdown', (e) => {
+      pointerDown = true
+      startX = e.clientX
+      deltaX = 0
+      slidesEl.style.transition = 'none'
+    })
 
-    // ---------- Click izquierda/derecha ----------
-    leftZone.addEventListener('click', () => {
-      goTo((current - 1 + count) % count);
-    });
+    carousel.addEventListener('pointermove', (e) => {
+      if (!pointerDown) return
+      deltaX = e.clientX - startX
+      updateTransform(false, (deltaX / width) * 100)
+    })
 
-    rightZone.addEventListener('click', () => {
-      goTo((current + 1) % count);
-    });
+    function endSwipe() {
+      if (!pointerDown) return
+      pointerDown = false
+      const threshold = width * 0.12
 
-    // ---------- Swipe ----------
-let pointerDown = false;
-let startX = 0;
-let deltaX = 0;
-let width = carousel.clientWidth;
+      if (deltaX < -threshold) goTo(current + 1)
+      else if (deltaX > threshold) goTo(current - 1)
+      else goTo(current + 1)
 
-carousel.addEventListener('pointerdown', (e) => {
-  pointerDown = true;
-  startX = e.clientX;
-  deltaX = 0;
+      deltaX = 0
+    }
 
-  // IMPORTANTE: NO usamos pointerCapture
-  slidesEl.style.transition = 'none';
-});
+    carousel.addEventListener('pointerup', endSwipe)
+    carousel.addEventListener('pointerleave', endSwipe)
+    carousel.addEventListener('pointercancel', endSwipe)
 
-carousel.addEventListener('pointermove', (e) => {
-  if (!pointerDown) return;
-
-  deltaX = e.clientX - startX;
-  const percent = (deltaX / width) * 100;
-  updateTransform(false, percent);
-});
-
-function endSwipe(e) {
-  if (!pointerDown) return;
-  pointerDown = false;
-
-  const threshold = width * 0.12;
-
-  if (deltaX < -threshold) goTo((current + 1) % count);
-  else if (deltaX > threshold) goTo((current - 1 + count) % count);
-  else goTo(current);
-
-  deltaX = 0;
-}
-
-carousel.addEventListener('pointerup', endSwipe);
-carousel.addEventListener('pointerleave', endSwipe);
-carousel.addEventListener('pointercancel', endSwipe);
-
-
-
-    // Recalcular ancho en resize
     window.addEventListener('resize', () => {
-      width = carousel.clientWidth;
-      updateTransform(false, 0);
-    });
+      width = carousel.clientWidth
+      updateTransform(false)
+    })
 
-    // Inicial
-    updatePageIndicator();
-    updateTransform(false, 0);
+    updateTransform(false)
   }
-})();
+
+})

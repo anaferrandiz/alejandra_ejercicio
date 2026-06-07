@@ -1,0 +1,163 @@
+ * {
+     margin: 0;
+     padding: 0;
+     border: 0;
+     box-sizing: border-box;
+ }
+
+ li {
+     list-style: none;
+ }
+
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6 {
+     font-size: inherit;
+     font-weight: inherit;
+ }
+
+ a {
+     color: inherit;
+     text-decoration: none;
+     display: block;
+ }
+
+ p a {
+     display: inline;
+ }
+
+ img,
+ picture,
+ video,
+ iframe {
+     display: block;
+     width: 100%;
+     /* height: initial; */
+ }
+
+ form,
+ input,
+ label,
+ select,
+ option,
+ textarea,
+ button {
+     font-size: inherit;
+     font-family: inherit;
+     display: block;
+     background-color: transparent;
+ }
+
+ :root {
+     --color-roig-links: rgb(241, 112, 98);
+ }
+
+ html {
+     scroll-behavior: smooth;
+ }
+
+ body {
+     /* font-family: "Space Grotesk", sans-serif; */
+     font-family: "Inter", sans-serif;
+ }
+
+ /* accesibilidad al navegar con tabulador */
+ :focus-visible {
+     outline: 2px solid #1a1a1a;
+     outline-offset: 2px;
+ }
+
+
+ /**************** FIN RESET *****************/
+
+
+ /* HEADER */
+
+
+
+ .header {
+     width: 100%;
+     display: flex;
+     flex-flow: column nowrap;
+     justify-content: flex-start;
+     align-items: flex-start;
+
+     padding: 2rem;
+     position: fixed;
+     top: 0;
+     z-index: 2;
+ }
+
+ .header__button {
+     width: 1.4rem;
+     opacity: 0.6;
+     margin-left: .8rem;
+     cursor: pointer;
+ }
+
+
+ .header__nav {
+     display: none;
+     font-size: .8em;
+     flex-flow: column nowrap;
+     justify-content: flex-start;
+     align-items: flex-start;
+     gap: 2rem;
+     margin-top: 3rem;
+ }
+
+ .header__nav.isActive {
+     display: flex;
+ }
+
+ /* FIN HEADER */
+
+
+ .wrapper__principal {
+     width: 100%;
+     min-height: 100vh;
+
+     display: flex;
+     flex-flow: column nowrap;
+     justify-content: center;
+     align-items: center;
+ }
+
+
+ .div__p {
+     width: 55%;
+
+     display: flex;
+     flex-flow: column nowrap;
+     justify-content: center;
+     align-items: flex-start;
+
+     gap: 1rem;
+     font-size: .8em;
+     color: rgb(144, 144, 144);
+     line-height: 1.6;
+
+ }
+
+
+ .p__description {
+
+     text-align: left;
+
+ }
+
+
+
+ @media (max-width:1200px) {
+
+    .wrapper__principal{
+             margin-top: 5rem;
+
+    }
+     .div__p {
+     width: 70%;}
+
+ }
